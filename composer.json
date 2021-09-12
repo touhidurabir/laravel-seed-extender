@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": ">=7.3.0",
+        "php": ">=7.4.0",
         "illuminate/database": "^8.54",
         "touhidurabir/laravel-stub-generator": "^1.0"
     },
