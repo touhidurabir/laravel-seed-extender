@@ -122,15 +122,15 @@ class CommandTest extends TestCase {
     /**
      * @test
      */
-    public function it_will_geneate_proper_seeder_with_proper_content() {
+    // public function it_will_geneate_proper_seeder_with_proper_content() {
 
-        $this->artisan('make:extend-seeder UsersTableSeeder --table=users --ignorables=id,deleted_at')->assertExitCode(0);
+    //     $this->artisan('make:extend-seeder UsersTableSeeder --table=users --ignorables=id,deleted_at')->assertExitCode(0);
 
-        $this->assertEquals(
-            File::get($this->seederStoreFullPath . 'UsersTableSeeder.php'),
-            File::get(__DIR__ . '/database/seeders/UsersTableSeeder.php')
-        );
-    }
+    //     $this->assertEquals(
+    //         File::get($this->seederStoreFullPath . 'UsersTableSeeder.php'),
+    //         File::get(__DIR__ . '/database/seeders/UsersTableSeeder.php')
+    //     );
+    // }
 
 
     /**
