@@ -1,6 +1,6 @@
 <?php
 
-namespace Touhidurabir\SeedExtender\Tests\App\Database\Seeders;
+namespace Touhidurabir\SeedExtender\Tests\App;
 
 use Touhidurabir\SeedExtender\BaseTableSeeder;
 

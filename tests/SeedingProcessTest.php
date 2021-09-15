@@ -3,7 +3,7 @@
 namespace Touhidurabir\SeedExtender\Tests;
 
 use Orchestra\Testbench\TestCase;
-use Touhidurabir\SeedExtender\Tests\App\Database\Seeders\UsersTableSeeder;
+use Touhidurabir\SeedExtender\Tests\App\UsersTableSeeder;
 use Touhidurabir\SeedExtender\Tests\Traits\LaravelTestBootstrapping;
 
 class SeedingProcessTest extends TestCase {
