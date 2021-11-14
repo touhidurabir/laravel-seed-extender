@@ -15,14 +15,6 @@ class UsersTableSeeder extends BaseTableSeeder {
 
 
     /**
-     * The list of table attributes/columns
-     *
-     * @var array
-     */
-    protected $columns = ["id", "email", "password", "created_at", "updated_at", "deleted_at"];
-
-
-    /**
      * The table attributes/columns that will be ignored during the seeding process
      *
      * @var array

@@ -3,9 +3,11 @@
 namespace Touhidurabir\SeedExtender;
 
 use Touhidurabir\SeedExtender\BaseTableSeeder;
-use Touhidurabir\SeedExtender\Exceptions\SeedExtenderSchemaException;
+use Touhidurabir\SeedExtender\Concerns\SeederValidator;
 
 class Seeder extends BaseTableSeeder {
+
+    use SeederValidator;
     
     /**
      * Set the seeding table
@@ -83,55 +85,4 @@ class Seeder extends BaseTableSeeder {
         return $this;
     }
 
-
-    /**
-     * Run the seeding process
-     *
-     * @return void
-     */
-    public function run() {
-
-        $this->validate();
-
-        $this->columns = $this->columnList($this->table);
-
-        parent::run();
-    }
-
-
-    /**
-     * Validate the details before running the seeding process
-     *
-     * @return void
-     */
-    protected function validate() {
-
-        if ( ! $this->table ) {
-
-            throw SeedExtenderSchemaException::noTableGiven();
-        }
-
-        if ( ! $this->tableExists($this->table) ) {
-
-            throw SeedExtenderSchemaException::tableNotFound($table);
-        }
-
-        if ( !empty($this->useables) && !$this->hasColumns($this->table, $this->useables) ) {
-
-            throw SeedExtenderSchemaException::tableColumnsNotDefined(
-                $this->table, 
-                $this->arbitraryColumns($this->table, $this->useables), 
-                "useables"
-            );
-        }
-
-        if ( !empty($this->ignorables) && !$this->hasColumns($this->table, $this->ignorables) ) {
-
-            throw SeedExtenderSchemaException::tableColumnsNotDefined(
-                $this->table, 
-                $this->arbitraryColumns($this->table, $this->ignorables), 
-                "ignorables"
-            );
-        }
-    }
 }

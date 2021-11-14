@@ -6,8 +6,12 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Touhidurabir\SeedExtender\Concerns\ColumnManager;
+use Touhidurabir\SeedExtender\Concerns\SeederValidator;
+
 
 abstract class BaseTableSeeder extends Seeder {
+
+    use SeederValidator;
 
     /**
      * Provide table column related functionality
@@ -21,6 +25,14 @@ abstract class BaseTableSeeder extends Seeder {
      * @var string
      */
     protected $table = null;
+
+
+    /**
+     * The list of table attributes/columns
+     *
+     * @var array
+     */
+    protected $columns = [];
 
     
     /**
@@ -55,6 +67,10 @@ abstract class BaseTableSeeder extends Seeder {
      * @return void
      */
     public function run() {
+
+        $this->validate();
+
+        $this->columns = $this->columnList($this->table);
         
     	$seedableColumns = $this->seedableColumns();
         

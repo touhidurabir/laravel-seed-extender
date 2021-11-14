@@ -12,3 +12,9 @@ All notable changes to this project will be documented in this file.
 
 ## [1.0.2] - 2021-09-15
 - Test update
+
+## [1.0.3] - 2021-11-15
+- Removed **$column** property from generated seeder class.
+- Added the columns list handling process more dynamic.
+- Feature optimization. 
+- README update.

@@ -15,14 +15,6 @@ class {{class}} extends BaseTableSeeder {
 
 
     /**
-     * The list of table attributes/columns
-     *
-     * @var array
-     */
-    protected $columns = "{{columns}}";
-
-
-    /**
      * The table attributes/columns that will be ignored during the seeding process
      *
      * @var array

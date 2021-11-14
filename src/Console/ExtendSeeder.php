@@ -102,7 +102,7 @@ class ExtendSeeder extends Command {
                                 ->withReplacers([
                                     'class'         => $this->argument('class'),
                                     'table'         => $this->option('table'),
-                                    'columns'       => $this->option('table') ? $this->columnList($this->option('table')) : [],
+                                    // 'columns'       => $this->option('table') ? $this->columnList($this->option('table')) : [],
                                     'ignorables'    => $this->option('ignorables') ? array_map('trim', explode(',', $this->option('ignorables'))) : [],
                                     'useables'      => $this->option('useables') ? array_map('trim', explode(',', $this->option('useables'))) : [],
                                     'timestamp'     => $this->option('no-timestamp') ? false : $this->hasColumns($this->option('table'), array_map('trim', explode(',', $this->option('timestampables')))),
