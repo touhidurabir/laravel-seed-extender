@@ -1,0 +1,15 @@
+    
+    /**
+     * If define, the seeding process will utilize the eloquent model
+     *
+     * @var string
+     */    
+    protected $model = {{model}};
+
+
+    /**
+     * Determine if the seeding process run quietly without firing any model event if seed vai model
+     *
+     * @var boolean
+     */    
+    protected $quietly = {{quietly}};

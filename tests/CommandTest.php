@@ -113,7 +113,12 @@ class CommandTest extends TestCase {
      */
     public function the_extend_seeder_command_will_run() {
 
-        $this->artisan('make:extend-seeder UsersTableSeeder --table=users --ignorables=id,deleted_at')->assertExitCode(0);
+        $this->artisan('make:extend-seeder', [
+            'class'         => 'UsersTableSeeder',
+            '--table'       => 'users',
+            '--model'       => 'Touhidurabir\\SeedExtender\\Tests\\App\\User',
+            '--ignorables'  => 'id,deleted_at',
+        ])->assertExitCode(0);
 
         $this->artisan('make:extend-seeder ProfilesTableSeeder --table=profiles --useables=first_name,last_name')->assertExitCode(0);
     }
@@ -127,8 +132,8 @@ class CommandTest extends TestCase {
     //     $this->artisan('make:extend-seeder UsersTableSeeder --table=users --ignorables=id,deleted_at')->assertExitCode(0);
 
     //     $this->assertEquals(
-    //         File::get($this->seederStoreFullPath . 'UsersTableSeeder.php'),
-    //         File::get(__DIR__ . '/database/seeders/UsersTableSeeder.php')
+    //         trim(File::get($this->seederStoreFullPath . 'UsersTableSeeder.php')),
+    //         trim(File::get(__DIR__ . '/database/seeders/UsersTableSeeder.php'))
     //     );
     // }
 
@@ -158,9 +163,26 @@ class CommandTest extends TestCase {
      */
     public function it_will_fail_in_strict_mode_if_wrong_information_provided() {
 
-        $this->artisan('make:extend-seeder AddressTableSeeder --table=addresses --ignorables=id,deleted_at --strict')->assertExitCode(1);
+        // failure when wrong/non-existed table given
+        $this->artisan('make:extend-seeder AddressTableSeeder --table=addresses --ignorables=id,deleted_at --strict --replace')->assertExitCode(1);
 
-        $this->artisan('make:extend-seeder UsersTableSeeder --table=users --ignorables=id,bio,deleted_at --strict')->assertExitCode(1);
+        // failure when no table given
+        $this->artisan('make:extend-seeder UsersTableSeeder --ignorables=id,bio,deleted_at --strict --replace')->assertExitCode(1);
+
+
+        // failure when invalid/non-existed columns given
+        $this->artisan('make:extend-seeder UsersTableSeeder --table=users --ignorables=id,bio,deleted_at --strict --replace')->assertExitCode(1);
+        $this->artisan('make:extend-seeder UsersTableSeeder --table=users --useables=id,bio,deleted_at --strict --replace')->assertExitCode(1);
+
+        // failure when invalid/non-existed model class given
+        $this->artisan('make:extend-seeder', [
+            'class'         => 'UsersTableSeeder',
+            '--table'       => 'users',
+            '--model'       => 'Touhidurabir\\SeedExtender\\Tests\\App\\TestUser', // invalid model class
+            '--ignorables'  => 'id,deleted_at',
+            '--strict'      => true,
+            '--replace'     => true,
+        ])->assertExitCode(1);
     }
 
 }

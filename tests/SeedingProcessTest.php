@@ -4,6 +4,7 @@ namespace Touhidurabir\SeedExtender\Tests;
 
 use Orchestra\Testbench\TestCase;
 use Touhidurabir\SeedExtender\Tests\App\UsersTableSeeder;
+use Touhidurabir\SeedExtender\Tests\App\UsersTableSeederViaModel;
 use Touhidurabir\SeedExtender\Tests\Traits\LaravelTestBootstrapping;
 
 class SeedingProcessTest extends TestCase {
@@ -57,6 +58,23 @@ class SeedingProcessTest extends TestCase {
     public function the_seeder_class_will_seed_data() {
 
         (new UsersTableSeeder)->run();
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'testuser1@test.com',
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'testuser2@test.com',
+        ]);
+    }
+
+
+    /**
+     * @test
+     */
+    public function the_seeder_class_will_seed_data_via_model() {
+
+        (new UsersTableSeederViaModel)->run();
 
         $this->assertDatabaseHas('users', [
             'email' => 'testuser1@test.com',

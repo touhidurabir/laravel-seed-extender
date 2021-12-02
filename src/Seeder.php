@@ -66,6 +66,34 @@ class Seeder extends BaseTableSeeder {
 
 
     /**
+     * Define model class if desired seeding process is via the eloquent model class
+     *
+     * @param  string $modelClass
+     * @return self
+     */
+    public function throughModel(string $modelClass) {
+
+        $this->model = $modelClass;
+
+        return $this;
+    }
+
+
+    /**
+     * Should the model event emit on seeding when seeding run via eloquent model class
+     *
+     * @param  bool $withEvents
+     * @return self
+     */
+    public function withModelEvents(bool $withEvents = false) {
+
+        $this->quietly = $withEvents;
+
+        return $this;
+    }
+
+
+    /**
      * Set the seeding data
      *
      * @param  array $data

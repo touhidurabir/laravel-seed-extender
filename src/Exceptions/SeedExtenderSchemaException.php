@@ -13,7 +13,7 @@ class SeedExtenderSchemaException extends Exception {
      */
     public static function noTableGiven() {
 
-        return new static("Not table name provided");
+        return new static("No table information has provided");
     }
 
 
@@ -42,7 +42,7 @@ class SeedExtenderSchemaException extends Exception {
 
         $missingColumns = implode(', ', $columns);
 
-        return new static("The given columns {$missingColumns} not defined in the {$table} schema that is give for {$purposeOption} purpose");
+        return new static("The given columns [{$missingColumns}] not defined in the {$table} schema that is give for {$purposeOption} purpose");
     }
     
 }

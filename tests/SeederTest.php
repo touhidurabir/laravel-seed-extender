@@ -110,10 +110,60 @@ class SeederTest extends TestCase {
     /**
      * @test
      */
+    public function the_seeder_will_run_seeding_process_via_model() {
+
+        (new Seeder)
+            ->table('users')
+            ->useables(['email', 'password'])
+            ->seedData([
+                ['testuser1@test.com', '123456',],
+            ])
+            ->throughModel(User::class)
+            ->run();
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'testuser1@test.com'
+        ]);
+
+        SeedExtender::table('users')
+                    ->ignorables(['id', 'deleted_at'])
+                    ->seedData([
+                        ['testuser2@test.com', '123456',],
+                    ])
+                    ->throughModel(User::class)
+                    ->withModelEvents()
+                    ->run();
+        
+        $this->assertDatabaseHas('users', [
+            'email' => 'testuser2@test.com'
+        ]);
+    }
+
+
+    /**
+     * @test
+     */
+    public function the_seeder_will_throw_exception_if_no_table_has_given() {
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('No table information has provided');
+
+        SeedExtender::ignorables(['id', 'deleted_at'])
+                    ->seedData([
+                        ['testuser2@test.com', '123456',],
+                    ])
+                    ->run();
+    }
+
+
+    /**
+     * @test
+     */
     public function the_seeder_will_throw_exception_if_wrong_table_name_given() {
 
         $this->expectException(Exception::class);
-        
+        $this->expectExceptionMessage('The given some_table not found');
+
         SeedExtender::table('some_table')
                     ->ignorables(['id', 'deleted_at'])
                     ->seedData([
@@ -129,9 +179,46 @@ class SeederTest extends TestCase {
     public function the_seeder_will_throw_exception_if_wrong_columns_given() {
 
         $this->expectException(Exception::class);
+        $this->expectExceptionMessage('The given columns [some_other_column] not defined in the users schema that is give for ignorables purpose');
         
         SeedExtender::table('users')
                     ->ignorables(['id', 'deleted_at', 'some_other_column'])
+                    ->seedData([
+                        ['testuser2@test.com', '123456',],
+                    ])
+                    ->run();
+    }
+
+
+    /**
+     * @test
+     */
+    public function the_seeder_will_throw_exception_if_non_existed_model_given() {
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Given model Touhidurabir\SeedExtender\Tests\App\TestUser not found.");
+        
+        SeedExtender::table('users')
+                    ->ignorables(['id', 'deleted_at'])
+                    ->throughModel('Touhidurabir\\SeedExtender\\Tests\\App\\TestUser')
+                    ->seedData([
+                        ['testuser2@test.com', '123456',],
+                    ])
+                    ->run();
+    }
+
+
+    /**
+     * @test
+     */
+    public function the_seeder_will_throw_exception_if_invalid_model_given() {
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Given model Touhidurabir\SeedExtender\Tests\App\UsersTableSeeder is not a valid child of base model Illuminate\Database\Eloquent\Model class");
+        
+        SeedExtender::table('users')
+                    ->ignorables(['id', 'deleted_at'])
+                    ->throughModel('Touhidurabir\\SeedExtender\\Tests\\App\\UsersTableSeeder')
                     ->seedData([
                         ['testuser2@test.com', '123456',],
                     ])
@@ -187,4 +274,5 @@ class SeederTest extends TestCase {
             'updated_at' => '2021-09-09 10:10:10'
         ]);
     }
+
 }

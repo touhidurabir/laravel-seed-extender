@@ -69,6 +69,22 @@ class UsersTableSeeder extends BaseTableSeeder {
 
 
     /**
+     * If define, the seeding process will utilize the eloquent model
+     *
+     * @var string
+     */    
+    protected $model = null;
+
+
+    /**
+     * Determine if the seeding process should run quietly without firing any model event if seed vai model
+     *
+     * @var boolean
+     */    
+    protected $quietly = true;
+
+
+    /**
      * The seeding data
      *
      * @var array
@@ -126,12 +142,36 @@ php artisan make:extend-seeder UsersTableSeeder --table=users --useables=name,em
 ```
  > NOTE that if the **$useables** property and defined and not empty, it will take account of it and ignore the set values of **$ignorables** property. 
 
+
 ### $includeTimestampsOnSeeding (PROPERTY)
 
 This defined if the **created_at** and **updated_at** values will be auto included at the seed time. by default this is set to true . but if the model is not using the **timestamp** values or do not want to include it in the seding process, then specify it through the command at the time of generation 
 
 ```bash
 php artisan make:extend-seeder UsersTableSeeder --table=users --useables=name,email,password --no-timestamp
+```
+
+### $model (PROPERTY)
+
+This define the table associated model. Only use this one when want to run the seeding process through eloquent model class .
+
+> NOTE that is the **$model** property defined, the console seeding process will use the model class to run the seeding process .
+
+set the option **-model** with proper model class will full namespace in the command to specify that you want to have the seeding process to use the eloquent model class . 
+
+```bash
+php artisan make:extend-seeder UsersTableSeeder --table=users --model='App\\Models\\User' --useables=name,email,password --no-timestamp
+```
+
+### $quietly (PROPERTY)
+
+This define if the model events should fire or not when running the seeding process via eloquent model . buy default it's set to **TRUE** so that when seeding process will run via model class, no model eents will fire as most of the time we do not want to have our observers(if registered) to perform action at the seed time . Set it to **FALSE** to make the sure that model events will fiew at the seed time if seeding through eloquent model .
+
+use the flag **--with-events** in the command to specify that you want to have the model events to fire at seeding time . 
+
+
+```bash
+php artisan make:extend-seeder UsersTableSeeder --table=users --model='App\\Models\\User' --with-events --useables=name,email,password --no-timestamp
 ```
 
 ### $data (PROPERTY)
@@ -197,6 +237,8 @@ SeedExtender::table('table_name') //table name
         [ [], [], ], // the seed data itself
         [] // any auto mergeable repetitive data
     )
+    ->throughModel(SomeModelClass::class) // specify if want to run seeding via eloquent model
+    ->withModelEvents() // specific if want to have model events fire when running the seeding process via eloquent model
     ->run(); // run the seeding process
 ```
 

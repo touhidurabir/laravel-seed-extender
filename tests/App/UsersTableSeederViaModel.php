@@ -1,17 +1,25 @@
 <?php
 
-namespace Database\Seeders;
+namespace Touhidurabir\SeedExtender\Tests\App;
 
 use Touhidurabir\SeedExtender\BaseTableSeeder;
 
-class {{class}} extends BaseTableSeeder {
+class UsersTableSeederViaModel extends BaseTableSeeder {
     
     /**
      * Seeder table name 
      *
      * @var string
      */
-    protected $table = "{{table}}";
+    protected $table = "users";
+
+
+    /**
+     * The list of table attributes/columns
+     *
+     * @var array
+     */
+    protected $columns = ["id", "email", "password", "created_at", "updated_at", "deleted_at"];
 
 
     /**
@@ -19,7 +27,7 @@ class {{class}} extends BaseTableSeeder {
      *
      * @var array
      */
-    protected $ignorables = "{{ignorables}}";
+    protected $ignorables = ["id", "deleted_at"];
 
 
     /**
@@ -27,7 +35,7 @@ class {{class}} extends BaseTableSeeder {
      *
      * @var array
      */
-    protected $useables = "{{useables}}";
+    protected $useables = ["email", "password"];
 
 
     /**
@@ -35,17 +43,25 @@ class {{class}} extends BaseTableSeeder {
      *
      * @var boolean
      */    
-    protected $includeTimestampsOnSeeding = {{timestamp}};
+    protected $includeTimestampsOnSeeding = true;
 
-    {{seedThroughModel}}
-    
+
+    /**
+     * If define, the seeding process will utilize the eloquent model
+     *
+     * @var string
+     */    
+    protected $model = \Touhidurabir\SeedExtender\Tests\App\User::class;
+
+
     /**
      * The seeding data
      *
      * @var array
      */
     protected $data = [
-    	
+    	['testuser1@test.com', '123456'],
+        ['testuser2@test.com', '123456'],
     ];
 
 

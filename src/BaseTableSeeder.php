@@ -34,6 +34,22 @@ abstract class BaseTableSeeder extends Seeder {
      */
     protected $columns = [];
 
+
+    /**
+     * If define, the seeding process will utilize the eloquent model
+     *
+     * @var string
+     */    
+    protected $model = null;
+
+
+    /**
+     * Determine if the seeding process should run quietly without firing any model event if seed vai model
+     *
+     * @var boolean
+     */    
+    protected $quietly = true;
+
     
     /**
      * The seeding data
@@ -75,17 +91,37 @@ abstract class BaseTableSeeder extends Seeder {
     	$seedableColumns = $this->seedableColumns();
         
         $mergeableData = $this->generateTimestampMergeList();
-        
+
+        $self = $this;
+
+        $saveMethod = 'save';
+
+        if ( $this->model ) {
+
+            if ( $this->quietly && method_exists(new $this->model, 'saveQuietly') ) {
+
+                $saveMethod = 'saveQuietly';
+            }
+        }
+
         foreach (array_chunk($this->seedableDataBuilder(), 5000) as $data) {
 
-            DB::table($this->table)->insert(
-                array_map(function ($row) use ($seedableColumns, $mergeableData) {
-                    return array_combine(
-                        $seedableColumns, 
-                        array_merge($row, $mergeableData)
-                    );
-                }, $data)
-            );
+            $insertables = collect($data)->map(function ($row) use ($seedableColumns, $mergeableData) {
+
+                return array_combine($seedableColumns, array_merge($row, $mergeableData));
+            });
+
+            if ( is_null($this->model) ) {
+
+                DB::table($this->table)->insert($insertables->toArray());
+
+                continue;
+            }
+
+            $insertables->each(function ($insertable) use ($self, $saveMethod) {
+
+                (new $self->model)->fill($insertable)->{$saveMethod}();
+            });
         }   
     }
     
