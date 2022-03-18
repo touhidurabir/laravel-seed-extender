@@ -100,17 +100,19 @@ class ExtendSeeder extends Command {
             
             $this->handleStrict($this->option('strict'));
 
+            $tableName = $this->option('table') ?? 'table_name';
+
             $stubGenerator = (new StubGenerator)
                                 ->from($this->generateFullPathOfStubFile($this->stubPath), true)
                                 ->to('/database/seeders/', true)
                                 ->as($this->argument('class'))
                                 ->withReplacers([
                                     'class'             => $this->argument('class'),
-                                    'table'             => $this->option('table'),
-                                    // 'columns'           => $this->option('table') ? $this->columnList($this->option('table')) : [],
+                                    'table'             => $tableName,
+                                    // 'columns'           => $this->option('table') ? $this->columnList($tableName) : [],
                                     'ignorables'        => $this->option('ignorables') ? array_map('trim', explode(',', $this->option('ignorables'))) : [],
                                     'useables'          => $this->option('useables') ? array_map('trim', explode(',', $this->option('useables'))) : [],
-                                    'timestamp'         => $this->option('no-timestamp') ? false : $this->hasColumns($this->option('table'), array_map('trim', explode(',', $this->option('timestampables')))),
+                                    'timestamp'         => $this->option('no-timestamp') ? false : $this->hasColumns($tableName, array_map('trim', explode(',', $this->option('timestampables')))),
                                     'seedThroughModel'  => $this->throughModelStubber(),
 
                                 ])
@@ -123,8 +125,6 @@ class ExtendSeeder extends Command {
             }
             
         } catch (Throwable $exception) {
-
-            ray($exception);
             
             $this->outputConsoleException($exception);
 

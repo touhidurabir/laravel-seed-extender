@@ -46,6 +46,7 @@ class UsersTableSeeder extends BaseTableSeeder {
     protected $includeTimestampsOnSeeding = true;
 
 
+
     /**
      * The seeding data
      *

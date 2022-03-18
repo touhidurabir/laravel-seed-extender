@@ -127,13 +127,27 @@ class CommandTest extends TestCase {
     /**
      * @test
      */
-    // public function it_will_geneate_proper_seeder_with_proper_content() {
+    public function it_will_geneate_proper_seeder_with_proper_content() {
 
-    //     $this->artisan('make:extend-seeder UsersTableSeeder --table=users --ignorables=id,deleted_at')->assertExitCode(0);
+        $this->artisan('make:extend-seeder UsersTableSeeder --table=users --ignorables=id,deleted_at')->assertExitCode(0);
+
+        $this->assertEquals(
+            trim(File::get($this->seederStoreFullPath . 'UsersTableSeeder.php')),
+            trim(File::get(__DIR__ . '/App/UsersTableSeederEmpty.php'))
+        );
+    }
+
+
+    /**
+     * @test
+     */
+    // public function it_will_geneate_seeder_without_specifying_table_name() {
+
+    //     $this->artisan('make:extend-seeder UsersTableSeeder --ignorables=id,deleted_at')->assertExitCode(0);
 
     //     $this->assertEquals(
     //         trim(File::get($this->seederStoreFullPath . 'UsersTableSeeder.php')),
-    //         trim(File::get(__DIR__ . '/database/seeders/UsersTableSeeder.php'))
+    //         trim(File::get(__DIR__ . '/App/UsersTableSeederWithoutTableName.php'))
     //     );
     // }
 

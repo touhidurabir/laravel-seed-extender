@@ -19,7 +19,7 @@ class {{class}} extends BaseTableSeeder {
      *
      * @var array
      */
-    protected $ignorables = "{{ignorables}}";
+    protected $ignorables = {{ignorables}};
 
 
     /**
@@ -27,7 +27,7 @@ class {{class}} extends BaseTableSeeder {
      *
      * @var array
      */
-    protected $useables = "{{useables}}";
+    protected $useables = {{useables}};
 
 
     /**
