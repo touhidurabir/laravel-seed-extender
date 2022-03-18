@@ -125,6 +125,8 @@ It define for which talbel it will run the seeder . to specify which table vai t
 php artisan make:extend-seeder UsersTableSeeder --table=users
 ```
 
+> NOTE that if the **$table** property not passed , it will set the default table name as just **table_name** which need to be updated as per target seeding table
+
 ### $ignorables (PROPERTY)
 
 It defined which columns will be ignored at the seed time . it specify which columns we want to ignore at the class generation time through the command, provide comma seperated columns name

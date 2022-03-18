@@ -26,3 +26,8 @@ All notable changes to this project will be documented in this file.
 - Tests update.
 - Bug Fix.
 - README update.
+
+## [1.1.1] - 2022-03-18
+- Bug Fix.
+- Tests update.
+- README update.
