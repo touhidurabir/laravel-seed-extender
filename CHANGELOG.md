@@ -31,3 +31,6 @@ All notable changes to this project will be documented in this file.
 - Bug Fix.
 - Tests update.
 - README update.
+
+## [1.1.2] - 2023-05-27
+- Laravl 10 support added
