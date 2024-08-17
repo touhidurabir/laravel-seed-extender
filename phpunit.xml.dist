@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php"
-         backupGlobals="false"
-         backupStaticAttributes="false"
-         colors="true"
-         verbose="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false">
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.2/phpunit.xsd"
+    bootstrap="vendor/autoload.php"
+    cacheResult="true"
+    beStrictAboutOutputDuringTests="true"
+    backupGlobals="false"
+    colors="true"
+    testdox="true"
+    processIsolation="false"
+    stopOnFailure="true"
+    backupStaticProperties="false"
+>
     <testsuites>
         <testsuite name="Laravel Model Hashid TestSuite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
-    <!-- <filter>
-        <whitelist>
-            <directory suffix=".php">src/</directory>
-        </whitelist>
-    </filter> -->
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">src/</directory>
-        </include>
+
+    <coverage>
+        <report>
+            <text 
+                outputFile="build/coverage.txt"
+                showUncoveredFiles="false"
+                showOnlySummary="true"
+            />
+        </report>
     </coverage>
+
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="DB_CONNECTION" value="sqlite"/>
@@ -32,10 +36,11 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
     </php>
+
     <logging>
-        <log type="tap" target="build/report.tap"/>
-        <log type="junit" target="build/report.junit.xml"/>
-        <log type="coverage-text" target="build/coverage.txt"/>
-        <log type="coverage-clover" target="build/logs/clover.xml"/>
+        <junit outputFile="build/junit.xml"/>
+        <teamcity outputFile="build/teamcity.txt"/>
+        <testdoxHtml outputFile="build/testdox.html"/>
+        <testdoxText outputFile="build/testdox.txt"/>
     </logging>
 </phpunit>

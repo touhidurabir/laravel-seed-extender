@@ -5,6 +5,7 @@ namespace Touhidurabir\SeedExtender\Tests;
 use Exception;
 use Orchestra\Testbench\TestCase;
 use Touhidurabir\SeedExtender\Seeder;
+use PHPUnit\Framework\Attributes\Test;
 use Touhidurabir\SeedExtender\Tests\App\User;
 use Touhidurabir\SeedExtender\Facades\SeedExtender;
 use Touhidurabir\SeedExtender\Tests\Traits\LaravelTestBootstrapping;
@@ -54,9 +55,7 @@ class SeederTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function the_seeder_can_be_initialted() {
 
         $seeder = new Seeder;
@@ -66,9 +65,7 @@ class SeederTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function the_seeder_can_be_initialted_from_facade() {
 
         $seeder = SeedExtender::getFacadeRoot();
@@ -77,9 +74,7 @@ class SeederTest extends TestCase {
         $this->assertIsObject($seeder);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function the_seeder_will_run_seeding_process() {
 
         (new Seeder)
@@ -107,9 +102,7 @@ class SeederTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function the_seeder_will_run_seeding_process_via_model() {
 
         (new Seeder)
@@ -140,9 +133,7 @@ class SeederTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function the_seeder_will_throw_exception_if_no_table_has_given() {
 
         $this->expectException(Exception::class);
@@ -156,9 +147,7 @@ class SeederTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function the_seeder_will_throw_exception_if_wrong_table_name_given() {
 
         $this->expectException(Exception::class);
@@ -173,9 +162,7 @@ class SeederTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function the_seeder_will_throw_exception_if_wrong_columns_given() {
 
         $this->expectException(Exception::class);
@@ -190,9 +177,7 @@ class SeederTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function the_seeder_will_throw_exception_if_non_existed_model_given() {
 
         $this->expectException(Exception::class);
@@ -208,9 +193,7 @@ class SeederTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function the_seeder_will_throw_exception_if_invalid_model_given() {
 
         $this->expectException(Exception::class);
@@ -226,9 +209,7 @@ class SeederTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function the_seeder_will_not_store_timestamps_if_instructed() {
 
         (new Seeder)
@@ -251,9 +232,7 @@ class SeederTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function the_seeder_will_work_according_to_given_merge_data() {
 
         (new Seeder)

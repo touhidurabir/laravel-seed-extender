@@ -4,6 +4,7 @@ namespace Touhidurabir\SeedExtender\Tests;
 
 use Orchestra\Testbench\TestCase;
 use Illuminate\Support\Facades\File;
+use PHPUnit\Framework\Attributes\Test;
 use Touhidurabir\SeedExtender\Tests\Traits\FileHelpers;
 use Touhidurabir\SeedExtender\Tests\Traits\LaravelTestBootstrapping;
 
@@ -108,9 +109,7 @@ class CommandTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function the_extend_seeder_command_will_run() {
 
         $this->artisan('make:extend-seeder', [
@@ -124,9 +123,7 @@ class CommandTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_will_geneate_proper_seeder_with_proper_content() {
 
         $this->artisan('make:extend-seeder UsersTableSeeder --table=users --ignorables=id,deleted_at')->assertExitCode(0);
@@ -138,9 +135,7 @@ class CommandTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    // #[Test]
     // public function it_will_geneate_seeder_without_specifying_table_name() {
 
     //     $this->artisan('make:extend-seeder UsersTableSeeder --ignorables=id,deleted_at')->assertExitCode(0);
@@ -152,9 +147,7 @@ class CommandTest extends TestCase {
     // }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_will_fail_to_generate_seeder_file_if_already_exists_and_not_instructed_to_replace() {
 
         $this->artisan('make:extend-seeder UsersTableSeeder --table=users --ignorables=id,deleted_at')->assertExitCode(0);
@@ -163,18 +156,14 @@ class CommandTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_will_run_properly_in_strict_mode() {
 
         $this->artisan('make:extend-seeder UsersTableSeeder --table=users --ignorables=id,deleted_at --strict')->assertExitCode(0);
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_will_fail_in_strict_mode_if_wrong_information_provided() {
 
         // failure when wrong/non-existed table given

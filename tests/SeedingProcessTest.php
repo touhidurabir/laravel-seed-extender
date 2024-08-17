@@ -3,6 +3,7 @@
 namespace Touhidurabir\SeedExtender\Tests;
 
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Touhidurabir\SeedExtender\Tests\App\UsersTableSeeder;
 use Touhidurabir\SeedExtender\Tests\App\UsersTableSeederViaModel;
 use Touhidurabir\SeedExtender\Tests\Traits\LaravelTestBootstrapping;
@@ -52,9 +53,7 @@ class SeedingProcessTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function the_seeder_class_will_seed_data() {
 
         (new UsersTableSeeder)->run();
@@ -69,9 +68,7 @@ class SeedingProcessTest extends TestCase {
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function the_seeder_class_will_seed_data_via_model() {
 
         (new UsersTableSeederViaModel)->run();
