@@ -35,7 +35,7 @@ All notable changes to this project will be documented in this file.
 ## [1.1.2] - 2023-05-27
 - Laravl 10 support added
 
-## [1.2] - 2024-08-17
+## [1.2.0] - 2024-08-17
 - Laravl 11 support added
 - PHPUnit upgraded to 11.3
 - Tests update
