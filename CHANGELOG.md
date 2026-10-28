@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+- Laravel 12 and 13 support added.
+- PHPUnit 12 support for tests.
+- PHPUnit XML configuration update.
+- Fixed PHP 8.4 implicit nullable parameter deprecations in `SeederValidator` and `CommandExceptionHandler`.
 
 
 ## [1.0.0] - 2021-09-12

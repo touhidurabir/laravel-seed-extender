@@ -32,7 +32,7 @@ trait SeederValidator {
      * 
      * @throws \Exception
      */
-    protected function validateTableHasProvided(string $table = null) {
+    protected function validateTableHasProvided(?string $table = null) {
 
         if ( ! $table ) {
 
@@ -69,7 +69,7 @@ trait SeederValidator {
      * 
      * @throws \Exception
      */
-    protected function validateProvidedColumnsDefinedInTable(string $table, array $columns, string $usePurpose = null) {
+    protected function validateProvidedColumnsDefinedInTable(string $table, array $columns, ?string $usePurpose = null) {
 
         if ( !empty($columns) && !$this->hasColumns($table, $columns) ) {
 
@@ -90,7 +90,7 @@ trait SeederValidator {
      * 
      * @throws \Exception
      */
-    protected function validateGivenModel(string $model = null) {
+    protected function validateGivenModel(?string $model = null) {
 
         if ( is_null($model) ) {
 
