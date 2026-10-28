@@ -143,16 +143,18 @@ class CommandTest extends TestCase
     }
 
 
-    // #[Test]
-    // public function it_will_geneate_seeder_without_specifying_table_name() {
+    /** @test */
+    #[Test]
+    public function it_will_geneate_seeder_without_specifying_table_name()
+    {
 
-    //     $this->artisan('make:extend-seeder UsersTableSeeder --ignorables=id,deleted_at')->assertExitCode(0);
+        $this->artisan('make:extend-seeder UsersTableSeeder --ignorables=id,deleted_at')->assertExitCode(0);
 
-    //     $this->assertEquals(
-    //         trim(File::get($this->seederStoreFullPath . 'UsersTableSeeder.php')),
-    //         trim(File::get(__DIR__ . '/App/UsersTableSeederWithoutTableName.php'))
-    //     );
-    // }
+        $this->assertEquals(
+            trim(File::get($this->seederStoreFullPath . 'UsersTableSeeder.php')),
+            trim(File::get(__DIR__ . '/App/UsersTableSeederWithoutTableName.php'))
+        );
+    }
 
 
     /** @test */
