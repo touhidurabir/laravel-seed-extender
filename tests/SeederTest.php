@@ -82,6 +82,22 @@ class SeederTest extends TestCase
 
     /** @test */
     #[Test]
+    public function the_package_registers_the_seed_extender_facade_alias()
+    {
+
+        $composer = json_decode(file_get_contents(__DIR__ . '/../composer.json'), true);
+
+        $aliases = $composer['extra']['laravel']['aliases'];
+
+        $this->assertSame(SeedExtender::class, $aliases['SeedExtender'] ?? null);
+
+        // the old copy-pasted alias stays until the next major release
+        $this->assertSame(SeedExtender::class, $aliases['ModelRepository'] ?? null);
+    }
+
+
+    /** @test */
+    #[Test]
     public function the_seeder_will_run_seeding_process()
     {
 

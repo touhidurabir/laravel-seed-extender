@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Renamed the PHPUnit test suite from "Laravel Model Hashid TestSuite" (copy-paste) to "Laravel Seed Extender TestSuite".
 - Re-enabled the `it_will_geneate_seeder_without_specifying_table_name` command test; its fixture already matches the generated seeder.
 - **Behaviour change:** fixed `Seeder::withModelEvents()` being inverted. `withModelEvents(true)` used to seed quietly (no model events) and `withModelEvents(false)` fired them. Now `withModelEvents(true)` fires model events and `withModelEvents(false)` seeds quietly. `withModelEvents()` with no argument still fires them, and seeding without calling it is still quiet.
+- Fixed the facade alias: the package now registers `SeedExtender`. The old copy-pasted `ModelRepository` alias is kept for backward compatibility and will be removed in the next major release.
 
 
 ## [1.0.0] - 2021-09-12
