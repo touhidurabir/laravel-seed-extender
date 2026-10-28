@@ -3,8 +3,12 @@
 namespace Touhidurabir\SeedExtender\Tests;
 
 use Orchestra\Testbench\TestCase;
+use Illuminate\Console\OutputStyle;
 use Illuminate\Support\Facades\File;
 use PHPUnit\Framework\Attributes\Test;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Touhidurabir\SeedExtender\Console\ExtendSeeder;
 use Touhidurabir\SeedExtender\Tests\Traits\FileHelpers;
 use Touhidurabir\SeedExtender\Tests\Traits\LaravelTestBootstrapping;
 
@@ -126,6 +130,27 @@ class CommandTest extends TestCase
         ])->assertExitCode(0);
 
         $this->artisan('make:extend-seeder ProfilesTableSeeder --table=profiles --useables=first_name,last_name')->assertExitCode(0);
+    }
+
+
+    /** @test */
+    #[Test]
+    public function the_extend_seeder_command_handle_returns_explicit_exit_codes()
+    {
+
+        $command = $this->app->make(ExtendSeeder::class);
+        $command->setLaravel($this->app);
+        $command->setOutput(new OutputStyle(new ArrayInput([]), new BufferedOutput()));
+
+        $command->setInput(new ArrayInput(
+            ['class' => 'UsersTableSeeder', '--table' => 'users'],
+            $command->getDefinition()
+        ));
+
+        $this->assertSame(0, $command->handle());
+
+        // the seeder already exists and --replace is not given
+        $this->assertSame(1, $command->handle());
     }
 
 

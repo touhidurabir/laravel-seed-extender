@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Re-enabled the `it_will_geneate_seeder_without_specifying_table_name` command test; its fixture already matches the generated seeder.
 - **Behaviour change:** fixed `Seeder::withModelEvents()` being inverted. `withModelEvents(true)` used to seed quietly (no model events) and `withModelEvents(false)` fired them. Now `withModelEvents(true)` fires model events and `withModelEvents(false)` seeds quietly. `withModelEvents()` with no argument still fires them, and seeding without calling it is still quiet.
 - Fixed the facade alias: the package now registers `SeedExtender`. The old copy-pasted `ModelRepository` alias is kept for backward compatibility and will be removed in the next major release.
+- `make:extend-seeder` now returns an explicit exit code (`Command::SUCCESS` / `Command::FAILURE`) from `handle()` instead of `null` on success.
 
 
 ## [1.0.0] - 2021-09-12
