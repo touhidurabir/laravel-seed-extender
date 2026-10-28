@@ -12,7 +12,7 @@
     cacheDirectory=".phpunit.cache"
 >
     <testsuites>
-        <testsuite name="Laravel Model Hashid TestSuite">
+        <testsuite name="Laravel Seed Extender TestSuite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
