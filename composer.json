@@ -37,8 +37,7 @@
                 "Touhidurabir\\SeedExtender\\SeedExtenderServiceProvider"
             ],
             "aliases": {
-                "SeedExtender": "Touhidurabir\\SeedExtender\\Facades\\SeedExtender",
-                "ModelRepository": "Touhidurabir\\SeedExtender\\Facades\\SeedExtender"
+                "SeedExtender": "Touhidurabir\\SeedExtender\\Facades\\SeedExtender"
             }
         }
     },

@@ -91,8 +91,8 @@ class SeederTest extends TestCase
 
         $this->assertSame(SeedExtender::class, $aliases['SeedExtender'] ?? null);
 
-        // the old copy-pasted alias stays until the next major release
-        $this->assertSame(SeedExtender::class, $aliases['ModelRepository'] ?? null);
+        // the copy-pasted ModelRepository alias collided with laravel-model-repository's facade
+        $this->assertArrayNotHasKey('ModelRepository', $aliases);
     }
 
 
