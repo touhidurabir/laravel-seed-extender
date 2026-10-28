@@ -89,10 +89,10 @@ class Seeder extends BaseTableSeeder
      * @param  bool $withEvents
      * @return self
      */
-    public function withModelEvents(bool $withEvents = false)
+    public function withModelEvents(bool $withEvents = true)
     {
 
-        $this->quietly = $withEvents;
+        $this->quietly = ! $withEvents;
 
         return $this;
     }

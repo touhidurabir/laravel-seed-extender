@@ -143,6 +143,88 @@ class SeederTest extends TestCase
     }
 
 
+    /**
+     * Seed one user through the model and count the fired "created" model events
+     *
+     * @param  callable $configure
+     * @return int
+     */
+    protected function countCreatedEventsWhileSeedingViaModel(callable $configure)
+    {
+
+        $fired = 0;
+
+        User::created(function () use (&$fired) {
+
+            $fired++;
+        });
+
+        $seeder = (new Seeder())
+            ->table('users')
+            ->useables(['email', 'password'])
+            ->seedData([
+                ['testuser1@test.com', '123456',],
+            ])
+            ->throughModel(User::class);
+
+        $configure($seeder);
+
+        $seeder->run();
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'testuser1@test.com'
+        ]);
+
+        return $fired;
+    }
+
+
+    /** @test */
+    #[Test]
+    public function the_seeder_will_fire_model_events_when_asked_with_model_events()
+    {
+
+        $this->assertSame(1, $this->countCreatedEventsWhileSeedingViaModel(function ($seeder) {
+
+            $seeder->withModelEvents(true);
+        }));
+    }
+
+
+    /** @test */
+    #[Test]
+    public function the_seeder_will_fire_model_events_when_with_model_events_called_without_argument()
+    {
+
+        $this->assertSame(1, $this->countCreatedEventsWhileSeedingViaModel(function ($seeder) {
+
+            $seeder->withModelEvents();
+        }));
+    }
+
+
+    /** @test */
+    #[Test]
+    public function the_seeder_will_not_fire_model_events_when_with_model_events_disabled()
+    {
+
+        $this->assertSame(0, $this->countCreatedEventsWhileSeedingViaModel(function ($seeder) {
+
+            $seeder->withModelEvents(false);
+        }));
+    }
+
+
+    /** @test */
+    #[Test]
+    public function the_seeder_will_not_fire_model_events_by_default()
+    {
+
+        $this->assertSame(0, $this->countCreatedEventsWhileSeedingViaModel(function ($seeder) {
+        }));
+    }
+
+
     /** @test */
     #[Test]
     public function the_seeder_will_throw_exception_if_no_table_has_given()
