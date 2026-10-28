@@ -4,10 +4,10 @@ namespace Touhidurabir\SeedExtender\Tests\App;
 
 use Touhidurabir\SeedExtender\BaseTableSeeder;
 
-class UsersTableSeeder extends BaseTableSeeder {
-    
+class UsersTableSeeder extends BaseTableSeeder
+{
     /**
-     * Seeder table name 
+     * Seeder table name
      *
      * @var string
      */
@@ -42,7 +42,7 @@ class UsersTableSeeder extends BaseTableSeeder {
      * Should merge and include timestamps[created_at, updated_at] by default into the seed data
      *
      * @var boolean
-     */    
+     */
     protected $includeTimestampsOnSeeding = true;
 
 
@@ -53,7 +53,7 @@ class UsersTableSeeder extends BaseTableSeeder {
      * @var array
      */
     protected $data = [
-    	['testuser1@test.com', '123456'],
+        ['testuser1@test.com', '123456'],
         ['testuser2@test.com', '123456'],
     ];
 
@@ -63,10 +63,11 @@ class UsersTableSeeder extends BaseTableSeeder {
      *
      * @return array
      */
-    protected function seedableDataBuilder() {
+    protected function seedableDataBuilder()
+    {
 
         foreach ($this->data as $key => $value) {
-            
+
             $this->data[$key] = array_merge($value, [
 
             ]);

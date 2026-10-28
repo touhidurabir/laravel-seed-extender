@@ -5,15 +5,16 @@ namespace Touhidurabir\SeedExtender\Exceptions;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 
-class SeedExtenderModelException extends Exception {
-
+class SeedExtenderModelException extends Exception
+{
     /**
      * If model not found on given path
      *
      * @param  string $model
      * @return object<\Exception>
      */
-    public static function modelNotFound(string $model) {
+    public static function modelNotFound(string $model)
+    {
 
         return new static("Given model {$model} not found.");
     }
@@ -25,11 +26,12 @@ class SeedExtenderModelException extends Exception {
      * @param  string $model
      * @return object<\Exception>
      */
-    public static function invalidModelClass(string $model) {
+    public static function invalidModelClass(string $model)
+    {
 
         $baseModel = Model::class;
 
         return new static("Given model {$model} is not a valid child of base model {$baseModel} class");
     }
-    
+
 }

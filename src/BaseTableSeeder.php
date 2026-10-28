@@ -4,13 +4,11 @@ namespace Touhidurabir\SeedExtender;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 use Touhidurabir\SeedExtender\Concerns\ColumnManager;
 use Touhidurabir\SeedExtender\Concerns\SeederValidator;
 
-
-abstract class BaseTableSeeder extends Seeder {
-
+abstract class BaseTableSeeder extends Seeder
+{
     use SeederValidator;
 
     /**
@@ -19,8 +17,8 @@ abstract class BaseTableSeeder extends Seeder {
     use ColumnManager;
 
 
-	/**
-     * Seeder table name 
+    /**
+     * Seeder table name
      *
      * @var string
      */
@@ -39,7 +37,7 @@ abstract class BaseTableSeeder extends Seeder {
      * If define, the seeding process will utilize the eloquent model
      *
      * @var string
-     */    
+     */
     protected $model = null;
 
 
@@ -47,10 +45,10 @@ abstract class BaseTableSeeder extends Seeder {
      * Determine if the seeding process should run quietly without firing any model event if seed vai model
      *
      * @var boolean
-     */    
+     */
     protected $quietly = true;
 
-    
+
     /**
      * The seeding data
      *
@@ -64,10 +62,11 @@ abstract class BaseTableSeeder extends Seeder {
      *
      * @return array
      */
-    protected function seedableDataBuilder() {
+    protected function seedableDataBuilder()
+    {
 
         foreach ($this->data as $key => $value) {
-            
+
             $this->data[$key] = array_merge($value, [
 
             ]);
@@ -82,23 +81,24 @@ abstract class BaseTableSeeder extends Seeder {
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
 
         $this->validate();
 
         $this->columns = $this->columnList($this->table);
-        
-    	$seedableColumns = $this->seedableColumns();
-        
+
+        $seedableColumns = $this->seedableColumns();
+
         $mergeableData = $this->generateTimestampMergeList();
 
         $self = $this;
 
         $saveMethod = 'save';
 
-        if ( $this->model ) {
+        if ($this->model) {
 
-            if ( $this->quietly && method_exists(new $this->model, 'saveQuietly') ) {
+            if ($this->quietly && method_exists(new $this->model(), 'saveQuietly')) {
 
                 $saveMethod = 'saveQuietly';
             }
@@ -111,7 +111,7 @@ abstract class BaseTableSeeder extends Seeder {
                 return array_combine($seedableColumns, array_merge($row, $mergeableData));
             });
 
-            if ( is_null($this->model) ) {
+            if (is_null($this->model)) {
 
                 DB::table($this->table)->insert($insertables->toArray());
 
@@ -120,9 +120,9 @@ abstract class BaseTableSeeder extends Seeder {
 
             $insertables->each(function ($insertable) use ($self, $saveMethod) {
 
-                (new $self->model)->fill($insertable)->{$saveMethod}();
+                (new $self->model())->fill($insertable)->{$saveMethod}();
             });
-        }   
+        }
     }
-    
+
 }

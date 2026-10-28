@@ -7,14 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Touhidurabir\SeedExtender\Exceptions\SeedExtenderModelException;
 use Touhidurabir\SeedExtender\Exceptions\SeedExtenderSchemaException;
 
-trait SeederValidator {
-
+trait SeederValidator
+{
     /**
      * Validate the details before running the seeding process
      *
      * @return void
      */
-    protected function validate() {
+    protected function validate()
+    {
 
         $this->validateTableHasProvided($this->table);
         $this->validateGivenTableExists($this->table);
@@ -29,12 +30,13 @@ trait SeederValidator {
      *
      * @param  string $table
      * @return void
-     * 
+     *
      * @throws \Exception
      */
-    protected function validateTableHasProvided(?string $table = null) {
+    protected function validateTableHasProvided(?string $table = null)
+    {
 
-        if ( ! $table ) {
+        if (! $table) {
 
             throw SeedExtenderSchemaException::noTableGiven();
         }
@@ -46,12 +48,13 @@ trait SeederValidator {
      *
      * @param  string $table
      * @return void
-     * 
+     *
      * @throws \Exception
      */
-    protected function validateGivenTableExists(string $table) {
+    protected function validateGivenTableExists(string $table)
+    {
 
-        if ( ! $this->tableExists($table) ) {
+        if (! $this->tableExists($table)) {
 
             throw SeedExtenderSchemaException::tableNotFound($table);
         }
@@ -64,18 +67,19 @@ trait SeederValidator {
      * @param  string   $table
      * @param  array    $columns
      * @param  string   $usePurpose
-     * 
+     *
      * @return void
-     * 
+     *
      * @throws \Exception
      */
-    protected function validateProvidedColumnsDefinedInTable(string $table, array $columns, ?string $usePurpose = null) {
+    protected function validateProvidedColumnsDefinedInTable(string $table, array $columns, ?string $usePurpose = null)
+    {
 
-        if ( !empty($columns) && !$this->hasColumns($table, $columns) ) {
+        if (!empty($columns) && !$this->hasColumns($table, $columns)) {
 
             throw SeedExtenderSchemaException::tableColumnsNotDefined(
-                $table, 
-                $this->arbitraryColumns($table, $columns), 
+                $table,
+                $this->arbitraryColumns($table, $columns),
                 $usePurpose
             );
         }
@@ -87,25 +91,26 @@ trait SeederValidator {
      *
      * @param  string   $model
      * @return void
-     * 
+     *
      * @throws \Exception
      */
-    protected function validateGivenModel(?string $model = null) {
+    protected function validateGivenModel(?string $model = null)
+    {
 
-        if ( is_null($model) ) {
+        if (is_null($model)) {
 
             return;
         }
 
-        if ( ! class_exists($model) ) {
+        if (! class_exists($model)) {
 
             throw SeedExtenderModelException::modelNotFound($model);
         }
 
-        if ( ! (new $model) instanceof Model ) {
-            
+        if (! (new $model()) instanceof Model) {
+
             throw SeedExtenderModelException::invalidModelClass($model);
         }
     }
-    
+
 }

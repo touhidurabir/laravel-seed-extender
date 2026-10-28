@@ -2,14 +2,11 @@
 
 namespace Touhidurabir\SeedExtender\Concerns;
 
-use Illuminate\Support\Facades\Schema;
-use Touhidurabir\SeedExtender\Concerns\SchemaHelper;
-
-trait ColumnManager {
-
+trait ColumnManager
+{
     use SchemaHelper;
 
-	/**
+    /**
      * The list of table attributes/columns
      *
      * @var array
@@ -40,37 +37,39 @@ trait ColumnManager {
      */
     protected $timestampColumns = ['created_at', 'updated_at'];
 
-	
-	/**
+
+    /**
      * Should merge and include timestamps[created_at, updated_at] by default into the seed data
      *
      * @var boolean
-     */    
+     */
     protected $includeTimestampsOnSeeding = true;
 
 
-	/**
+    /**
      * Return table column names as array.
      *
      * @return array
      */
-    protected function seedableColumns() {
+    protected function seedableColumns()
+    {
 
-        if ( $this->useables && !empty($this->useables) ) {
+        if ($this->useables && !empty($this->useables)) {
 
             return array_merge(
-                $this->useables, 
+                $this->useables,
                 $this->includeTimestampsOnSeeding ? $this->timestampColumns : []
             );
         }
 
-    	$this->ignorables = array_unique(
+        $this->ignorables = array_unique(
             array_merge(
-                $this->ignorables, $this->generateIgnoreableColumnList()
+                $this->ignorables,
+                $this->generateIgnoreableColumnList()
             )
         );
-        
-    	return array_diff(
+
+        return array_diff(
             empty($this->columns) ? $this->columnList($this->table) : $this->columns,
             $this->ignorables
         );
@@ -83,19 +82,20 @@ trait ColumnManager {
      * @param  array $columns
      * @return array
      */
-    protected function generateIgnoreableColumnList(array $columns = []) {
+    protected function generateIgnoreableColumnList(array $columns = [])
+    {
 
-        if ( ! empty($columns) )  {
+        if (! empty($columns)) {
 
             return $columns;
         }
 
-        if ( $this->hasColumn($this->table, 'deleted_at') ) {
+        if ($this->hasColumn($this->table, 'deleted_at')) {
 
             return ['deleted_at'];
         }
 
-    	return [];
+        return [];
     }
 
 
@@ -105,19 +105,20 @@ trait ColumnManager {
      * @param  array $list
      * @return array
      */
-    protected function generateTimestampMergeList(array $list = []) {
+    protected function generateTimestampMergeList(array $list = [])
+    {
 
-        if ( ! empty($list) ) {
+        if (! empty($list)) {
 
             return $list;
         }
 
-        if ( ! $this->includeTimestampsOnSeeding ) {
+        if (! $this->includeTimestampsOnSeeding) {
 
             return [];
         }
 
-        return [date('Y-m-d H:i:s'), date('Y-m-d H:i:s')];   
+        return [date('Y-m-d H:i:s'), date('Y-m-d H:i:s')];
     }
 
 }

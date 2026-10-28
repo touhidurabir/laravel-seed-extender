@@ -10,8 +10,8 @@ use Touhidurabir\SeedExtender\Tests\App\User;
 use Touhidurabir\SeedExtender\Facades\SeedExtender;
 use Touhidurabir\SeedExtender\Tests\Traits\LaravelTestBootstrapping;
 
-class SeederTest extends TestCase {
-    
+class SeederTest extends TestCase
+{
     use LaravelTestBootstrapping;
 
     /**
@@ -19,10 +19,11 @@ class SeederTest extends TestCase {
      *
      * @return void
      */
-    protected function defineDatabaseMigrations() {
+    protected function defineDatabaseMigrations()
+    {
 
         $this->loadMigrationsFrom(__DIR__ . '/App/database/migrations');
-        
+
         $this->artisan('migrate', ['--database' => 'testbench'])->run();
 
         $this->beforeApplicationDestroyed(function () {
@@ -38,7 +39,8 @@ class SeederTest extends TestCase {
      * @param  Illuminate\Foundation\Application $app
      * @return void
      */
-    protected function defineEnvironment($app) {
+    protected function defineEnvironment($app)
+    {
 
         // Setup default database to use sqlite :memory:
         $app['config']->set('database.default', 'testbench');
@@ -56,9 +58,10 @@ class SeederTest extends TestCase {
 
 
     #[Test]
-    public function the_seeder_can_be_initialted() {
+    public function the_seeder_can_be_initialted()
+    {
 
-        $seeder = new Seeder;
+        $seeder = new Seeder();
 
         $this->assertTrue($seeder instanceof Seeder);
         $this->assertIsObject($seeder);
@@ -66,7 +69,8 @@ class SeederTest extends TestCase {
 
 
     #[Test]
-    public function the_seeder_can_be_initialted_from_facade() {
+    public function the_seeder_can_be_initialted_from_facade()
+    {
 
         $seeder = SeedExtender::getFacadeRoot();
 
@@ -75,9 +79,10 @@ class SeederTest extends TestCase {
     }
 
     #[Test]
-    public function the_seeder_will_run_seeding_process() {
+    public function the_seeder_will_run_seeding_process()
+    {
 
-        (new Seeder)
+        (new Seeder())
             ->table('users')
             ->useables(['email', 'password'])
             ->seedData([
@@ -95,7 +100,7 @@ class SeederTest extends TestCase {
                         ['testuser2@test.com', '123456',],
                     ])
                     ->run();
-        
+
         $this->assertDatabaseHas('users', [
             'email' => 'testuser2@test.com'
         ]);
@@ -103,9 +108,10 @@ class SeederTest extends TestCase {
 
 
     #[Test]
-    public function the_seeder_will_run_seeding_process_via_model() {
+    public function the_seeder_will_run_seeding_process_via_model()
+    {
 
-        (new Seeder)
+        (new Seeder())
             ->table('users')
             ->useables(['email', 'password'])
             ->seedData([
@@ -126,7 +132,7 @@ class SeederTest extends TestCase {
                     ->throughModel(User::class)
                     ->withModelEvents()
                     ->run();
-        
+
         $this->assertDatabaseHas('users', [
             'email' => 'testuser2@test.com'
         ]);
@@ -134,7 +140,8 @@ class SeederTest extends TestCase {
 
 
     #[Test]
-    public function the_seeder_will_throw_exception_if_no_table_has_given() {
+    public function the_seeder_will_throw_exception_if_no_table_has_given()
+    {
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('No table information has provided');
@@ -148,7 +155,8 @@ class SeederTest extends TestCase {
 
 
     #[Test]
-    public function the_seeder_will_throw_exception_if_wrong_table_name_given() {
+    public function the_seeder_will_throw_exception_if_wrong_table_name_given()
+    {
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('The given some_table not found');
@@ -163,11 +171,12 @@ class SeederTest extends TestCase {
 
 
     #[Test]
-    public function the_seeder_will_throw_exception_if_wrong_columns_given() {
+    public function the_seeder_will_throw_exception_if_wrong_columns_given()
+    {
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('The given columns [some_other_column] not defined in the users schema that is give for ignorables purpose');
-        
+
         SeedExtender::table('users')
                     ->ignorables(['id', 'deleted_at', 'some_other_column'])
                     ->seedData([
@@ -178,11 +187,12 @@ class SeederTest extends TestCase {
 
 
     #[Test]
-    public function the_seeder_will_throw_exception_if_non_existed_model_given() {
+    public function the_seeder_will_throw_exception_if_non_existed_model_given()
+    {
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Given model Touhidurabir\SeedExtender\Tests\App\TestUser not found.");
-        
+
         SeedExtender::table('users')
                     ->ignorables(['id', 'deleted_at'])
                     ->throughModel('Touhidurabir\\SeedExtender\\Tests\\App\\TestUser')
@@ -194,11 +204,12 @@ class SeederTest extends TestCase {
 
 
     #[Test]
-    public function the_seeder_will_throw_exception_if_invalid_model_given() {
+    public function the_seeder_will_throw_exception_if_invalid_model_given()
+    {
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Given model Touhidurabir\SeedExtender\Tests\App\UsersTableSeeder is not a valid child of base model Illuminate\Database\Eloquent\Model class");
-        
+
         SeedExtender::table('users')
                     ->ignorables(['id', 'deleted_at'])
                     ->throughModel('Touhidurabir\\SeedExtender\\Tests\\App\\UsersTableSeeder')
@@ -210,9 +221,10 @@ class SeederTest extends TestCase {
 
 
     #[Test]
-    public function the_seeder_will_not_store_timestamps_if_instructed() {
+    public function the_seeder_will_not_store_timestamps_if_instructed()
+    {
 
-        (new Seeder)
+        (new Seeder())
             ->table('users')
             ->useables(['email', 'password'])
             ->includeTimestampsOnSeeding(false)
@@ -233,9 +245,10 @@ class SeederTest extends TestCase {
 
 
     #[Test]
-    public function the_seeder_will_work_according_to_given_merge_data() {
+    public function the_seeder_will_work_according_to_given_merge_data()
+    {
 
-        (new Seeder)
+        (new Seeder())
             ->table('users')
             ->useables(['email', 'password', 'created_at', 'updated_at'])
             ->includeTimestampsOnSeeding(false)
@@ -246,7 +259,7 @@ class SeederTest extends TestCase {
                 ['2021-09-09 10:10:10', '2021-09-09 10:10:10']
             )
             ->run();
-        
+
         $this->assertDatabaseHas('users', [
             'email' => 'testuser1@test.com',
             'created_at' => '2021-09-09 10:10:10',

@@ -8,8 +8,8 @@ use PHPUnit\Framework\Attributes\Test;
 use Touhidurabir\SeedExtender\Tests\Traits\FileHelpers;
 use Touhidurabir\SeedExtender\Tests\Traits\LaravelTestBootstrapping;
 
-class CommandTest extends TestCase {
-
+class CommandTest extends TestCase
+{
     use LaravelTestBootstrapping;
 
     use FileHelpers;
@@ -37,7 +37,8 @@ class CommandTest extends TestCase {
      *
      * @return void
      */
-    protected function seederFileStorePath() {
+    protected function seederFileStorePath()
+    {
 
         $this->seederStoreFullPath = $this->sanitizePath(
             str_replace('/public', '/database/seeders/', public_path())
@@ -50,7 +51,8 @@ class CommandTest extends TestCase {
      *
      * @return void
      */
-    protected function setUp(): void {
+    protected function setUp(): void
+    {
 
         parent::setUp();
 
@@ -62,9 +64,9 @@ class CommandTest extends TestCase {
 
             $this->artisan('migrate:rollback', ['--database' => 'testbench'])->run();
 
-            foreach(glob($self->seederStoreFullPath . '*.php') as $fileFullPath) {
-                
-                if ( ! in_array( last(explode('/', $fileFullPath)), $self->cleanUpExcludeFileNames ) ) {
+            foreach (glob($self->seederStoreFullPath . '*.php') as $fileFullPath) {
+
+                if (! in_array(last(explode('/', $fileFullPath)), $self->cleanUpExcludeFileNames)) {
 
                     File::delete($fileFullPath);
                 }
@@ -78,10 +80,11 @@ class CommandTest extends TestCase {
      *
      * @return void
      */
-    protected function defineDatabaseMigrations() {
+    protected function defineDatabaseMigrations()
+    {
 
         $this->loadMigrationsFrom(__DIR__ . '/App/database/migrations');
-        
+
         $this->artisan('migrate', ['--database' => 'testbench'])->run();
     }
 
@@ -92,7 +95,8 @@ class CommandTest extends TestCase {
      * @param  Illuminate\Foundation\Application $app
      * @return void
      */
-    protected function defineEnvironment($app) {
+    protected function defineEnvironment($app)
+    {
 
         // Setup default database to use sqlite :memory:
         $app['config']->set('database.default', 'testbench');
@@ -110,7 +114,8 @@ class CommandTest extends TestCase {
 
 
     #[Test]
-    public function the_extend_seeder_command_will_run() {
+    public function the_extend_seeder_command_will_run()
+    {
 
         $this->artisan('make:extend-seeder', [
             'class'         => 'UsersTableSeeder',
@@ -124,7 +129,8 @@ class CommandTest extends TestCase {
 
 
     #[Test]
-    public function it_will_geneate_proper_seeder_with_proper_content() {
+    public function it_will_geneate_proper_seeder_with_proper_content()
+    {
 
         $this->artisan('make:extend-seeder UsersTableSeeder --table=users --ignorables=id,deleted_at')->assertExitCode(0);
 
@@ -148,7 +154,8 @@ class CommandTest extends TestCase {
 
 
     #[Test]
-    public function it_will_fail_to_generate_seeder_file_if_already_exists_and_not_instructed_to_replace() {
+    public function it_will_fail_to_generate_seeder_file_if_already_exists_and_not_instructed_to_replace()
+    {
 
         $this->artisan('make:extend-seeder UsersTableSeeder --table=users --ignorables=id,deleted_at')->assertExitCode(0);
 
@@ -157,14 +164,16 @@ class CommandTest extends TestCase {
 
 
     #[Test]
-    public function it_will_run_properly_in_strict_mode() {
+    public function it_will_run_properly_in_strict_mode()
+    {
 
         $this->artisan('make:extend-seeder UsersTableSeeder --table=users --ignorables=id,deleted_at --strict')->assertExitCode(0);
     }
 
 
     #[Test]
-    public function it_will_fail_in_strict_mode_if_wrong_information_provided() {
+    public function it_will_fail_in_strict_mode_if_wrong_information_provided()
+    {
 
         // failure when wrong/non-existed table given
         $this->artisan('make:extend-seeder AddressTableSeeder --table=addresses --ignorables=id,deleted_at --strict --replace')->assertExitCode(1);

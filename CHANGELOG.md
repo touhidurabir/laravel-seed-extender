@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - PHPUnit 12 support for tests.
 - PHPUnit XML configuration update.
 - Fixed PHP 8.4 implicit nullable parameter deprecations in `SeederValidator` and `CommandExceptionHandler`.
+- Code style formatted to PSR-12 with Laravel Pint (`composer format` / `composer lint`).
 
 
 ## [1.0.0] - 2021-09-12
