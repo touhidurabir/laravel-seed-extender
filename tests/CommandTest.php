@@ -113,6 +113,7 @@ class CommandTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function the_extend_seeder_command_will_run()
     {
@@ -128,6 +129,7 @@ class CommandTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function it_will_geneate_proper_seeder_with_proper_content()
     {
@@ -153,6 +155,7 @@ class CommandTest extends TestCase
     // }
 
 
+    /** @test */
     #[Test]
     public function it_will_fail_to_generate_seeder_file_if_already_exists_and_not_instructed_to_replace()
     {
@@ -163,6 +166,7 @@ class CommandTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function it_will_run_properly_in_strict_mode()
     {
@@ -171,6 +175,7 @@ class CommandTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function it_will_fail_in_strict_mode_if_wrong_information_provided()
     {

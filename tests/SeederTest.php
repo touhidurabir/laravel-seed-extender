@@ -57,6 +57,7 @@ class SeederTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function the_seeder_can_be_initialted()
     {
@@ -68,6 +69,7 @@ class SeederTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function the_seeder_can_be_initialted_from_facade()
     {
@@ -78,6 +80,7 @@ class SeederTest extends TestCase
         $this->assertIsObject($seeder);
     }
 
+    /** @test */
     #[Test]
     public function the_seeder_will_run_seeding_process()
     {
@@ -107,6 +110,7 @@ class SeederTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function the_seeder_will_run_seeding_process_via_model()
     {
@@ -139,6 +143,7 @@ class SeederTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function the_seeder_will_throw_exception_if_no_table_has_given()
     {
@@ -154,6 +159,7 @@ class SeederTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function the_seeder_will_throw_exception_if_wrong_table_name_given()
     {
@@ -170,6 +176,7 @@ class SeederTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function the_seeder_will_throw_exception_if_wrong_columns_given()
     {
@@ -186,6 +193,7 @@ class SeederTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function the_seeder_will_throw_exception_if_non_existed_model_given()
     {
@@ -203,6 +211,7 @@ class SeederTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function the_seeder_will_throw_exception_if_invalid_model_given()
     {
@@ -220,6 +229,7 @@ class SeederTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function the_seeder_will_not_store_timestamps_if_instructed()
     {
@@ -244,6 +254,7 @@ class SeederTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function the_seeder_will_work_according_to_given_merge_data()
     {

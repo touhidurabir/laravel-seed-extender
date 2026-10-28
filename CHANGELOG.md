@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Fixed PHP 8.4 implicit nullable parameter deprecations in `SeederValidator` and `CommandExceptionHandler`.
 - Code style formatted to PSR-12 with Laravel Pint (`composer format` / `composer lint`).
 - Replaced Travis CI with GitHub Actions (PHP 8.2–8.4 × Laravel 11/12/13, plus a code style check).
+- Fixed the test suite running zero tests on PHPUnit 9 (Laravel 8/9): test methods now carry `/** @test */` docblocks alongside `#[Test]`.
 
 
 ## [1.0.0] - 2021-09-12

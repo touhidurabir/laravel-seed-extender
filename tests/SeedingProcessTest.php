@@ -55,6 +55,7 @@ class SeedingProcessTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function the_seeder_class_will_seed_data()
     {
@@ -71,6 +72,7 @@ class SeedingProcessTest extends TestCase
     }
 
 
+    /** @test */
     #[Test]
     public function the_seeder_class_will_seed_data_via_model()
     {
