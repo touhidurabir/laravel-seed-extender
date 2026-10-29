@@ -39,3 +39,18 @@ All notable changes to this project will be documented in this file.
 - Laravl 11 support added
 - PHPUnit upgraded to 11.3
 - Tests update
+
+## [1.3.0] - 2026-10-28
+- Laravel 12 and 13 support added.
+- PHPUnit 12 support for tests.
+- PHPUnit XML configuration update.
+- Fixed PHP 8.4 implicit nullable parameter deprecations in `SeederValidator` and `CommandExceptionHandler`.
+- Code style formatted to PSR-12 with Laravel Pint (`composer format` / `composer lint`).
+- Replaced Travis CI with GitHub Actions (PHP 8.1 × Laravel 8/9/10 and PHP 8.2–8.4 × Laravel 11/12/13, plus a code style check).
+- Fixed the test suite running zero tests on PHPUnit 9 (Laravel 8/9): test methods now carry `/** @test */` docblocks alongside `#[Test]`.
+- Renamed the PHPUnit test suite from "Laravel Model Hashid TestSuite" (copy-paste) to "Laravel Seed Extender TestSuite".
+- Re-enabled the `it_will_geneate_seeder_without_specifying_table_name` command test; its fixture already matches the generated seeder.
+- **Behaviour change:** fixed `Seeder::withModelEvents()` being inverted. `withModelEvents(true)` used to seed quietly (no model events) and `withModelEvents(false)` fired them. Now `withModelEvents(true)` fires model events and `withModelEvents(false)` seeds quietly. `withModelEvents()` with no argument still fires them, and seeding without calling it is still quiet.
+- Fixed the facade alias: the package now registers `SeedExtender`.
+- Removed the copy-pasted `ModelRepository` alias. It collided with laravel-model-repository's facade and never took effect anyway, because laravel-stub-generator (a dependency) registered the same alias after it. Use `SeedExtender` (or import `Touhidurabir\SeedExtender\Facades\SeedExtender`) instead.
+- `make:extend-seeder` now returns an explicit exit code (`Command::SUCCESS` / `Command::FAILURE`) from `handle()` instead of `null` on success.

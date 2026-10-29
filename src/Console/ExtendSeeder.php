@@ -8,11 +8,10 @@ use Illuminate\Console\Command;
 use Touhidurabir\StubGenerator\StubGenerator;
 use Touhidurabir\SeedExtender\Concerns\SchemaHelper;
 use Touhidurabir\SeedExtender\Concerns\SeederValidator;
-use Touhidurabir\SeedExtender\Exceptions\SeedExtenderSchemaException;
 use Touhidurabir\SeedExtender\Console\Concerns\CommandExceptionHandler;
 
-class ExtendSeeder extends Command {
-
+class ExtendSeeder extends Command
+{
     /**
      * Process the handeled exception and provide output
      */
@@ -40,7 +39,7 @@ class ExtendSeeder extends Command {
                             {--replace                              : Should replace existing class files}
                             {--strict                               : should do a strict checking of provided table and columns existance}';
 
-    
+
     /**
      * The console command description.
      *
@@ -81,8 +80,9 @@ class ExtendSeeder extends Command {
      *
      * @return void
      */
-    public function __construct() {
-        
+    public function __construct()
+    {
+
         parent::__construct();
     }
 
@@ -90,19 +90,20 @@ class ExtendSeeder extends Command {
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
-    public function handle() {
-        
+    public function handle()
+    {
+
         $this->info('Creating custom seeder');
 
         try {
-            
+
             $this->handleStrict($this->option('strict'));
 
             $tableName = $this->option('table') ?? 'table_name';
 
-            $stubGenerator = (new StubGenerator)
+            $stubGenerator = (new StubGenerator())
                                 ->from($this->generateFullPathOfStubFile($this->stubPath), true)
                                 ->to('/database/seeders/', true)
                                 ->as($this->argument('class'))
@@ -123,13 +124,15 @@ class ExtendSeeder extends Command {
 
                 $this->info('Custom seeder class generated successfully');
             }
-            
+
         } catch (Throwable $exception) {
-            
+
             $this->outputConsoleException($exception);
 
-            return 1;
+            return self::FAILURE;
         }
+
+        return self::SUCCESS;
     }
 
 
@@ -139,25 +142,27 @@ class ExtendSeeder extends Command {
      * @param  string $stubRelativePath
      * @return string
      */
-    private function generateFullPathOfStubFile(string $stubRelativePath) {
+    private function generateFullPathOfStubFile(string $stubRelativePath)
+    {
 
         return __DIR__ . $stubRelativePath;
     }
 
 
     /**
-     * Generate form stub segment for model based seeding and passed as string 
+     * Generate form stub segment for model based seeding and passed as string
      *
      * @return string
      */
-    private function throughModelStubber() {
-        
-        if ( ! $this->option('model') ) {
+    private function throughModelStubber()
+    {
+
+        if (! $this->option('model')) {
 
             return '';
         }
 
-        return (new StubGenerator)
+        return (new StubGenerator())
                 ->from($this->generateFullPathOfStubFile('/stubs/seed_through_model.stub'), true)
                 ->withReplacers([
                     'model'     => $this->option('model') . '::class',
@@ -172,23 +177,24 @@ class ExtendSeeder extends Command {
      *
      * @param  bool $strict
      * @return void
-     * 
+     *
      * @throws Exception
      */
-    private function handleStrict(bool $strict = false) {
+    private function handleStrict(bool $strict = false)
+    {
 
-        if ( ! $strict ) {
+        if (! $strict) {
 
             return;
         }
 
         $this->validateTableHasProvided($this->option('table'));
         $this->validateGivenTableExists($this->option('table'));
-        
-        collect($this->columnableOptions)
-            ->each( function($option, $index) {
 
-                if ( $this->option($option) ) {
+        collect($this->columnableOptions)
+            ->each(function ($option, $index) {
+
+                if ($this->option($option)) {
 
                     $this->validateProvidedColumnsDefinedInTable(
                         $this->option('table'),

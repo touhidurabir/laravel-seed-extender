@@ -2,22 +2,22 @@
 
 namespace Touhidurabir\SeedExtender;
 
-use Touhidurabir\SeedExtender\BaseTableSeeder;
 use Touhidurabir\SeedExtender\Concerns\SeederValidator;
 
-class Seeder extends BaseTableSeeder {
-
+class Seeder extends BaseTableSeeder
+{
     use SeederValidator;
-    
+
     /**
      * Set the seeding table
      *
      * @param  string $table
      * @return self
      */
-    public function table(string $table) {
-        
-        $this->table = $table;        
+    public function table(string $table)
+    {
+
+        $this->table = $table;
 
         return $this;
     }
@@ -29,7 +29,8 @@ class Seeder extends BaseTableSeeder {
      * @param  array $columns
      * @return self
      */
-    public function useables(array $columns = []) {
+    public function useables(array $columns = [])
+    {
 
         $this->useables = $columns;
 
@@ -43,10 +44,11 @@ class Seeder extends BaseTableSeeder {
      * @param  array $columns
      * @return self
      */
-    public function ignorables(array $columns = []) {
+    public function ignorables(array $columns = [])
+    {
 
         $this->ignorables = $columns;
-        
+
         return $this;
     }
 
@@ -57,7 +59,8 @@ class Seeder extends BaseTableSeeder {
      * @param  bool $withTimestamp
      * @return self
      */
-    public function includeTimestampsOnSeeding(bool $withTimestamp = true) {
+    public function includeTimestampsOnSeeding(bool $withTimestamp = true)
+    {
 
         $this->includeTimestampsOnSeeding = $withTimestamp;
 
@@ -71,7 +74,8 @@ class Seeder extends BaseTableSeeder {
      * @param  string $modelClass
      * @return self
      */
-    public function throughModel(string $modelClass) {
+    public function throughModel(string $modelClass)
+    {
 
         $this->model = $modelClass;
 
@@ -85,9 +89,10 @@ class Seeder extends BaseTableSeeder {
      * @param  bool $withEvents
      * @return self
      */
-    public function withModelEvents(bool $withEvents = false) {
+    public function withModelEvents(bool $withEvents = true)
+    {
 
-        $this->quietly = $withEvents;
+        $this->quietly = ! $withEvents;
 
         return $this;
     }
@@ -98,13 +103,14 @@ class Seeder extends BaseTableSeeder {
      *
      * @param  array $data
      * @param  array $mergeables
-     * 
+     *
      * @return self
      */
-    public function seedData(array $data = [], array $mergeables = []) {
+    public function seedData(array $data = [], array $mergeables = [])
+    {
 
         foreach ($data as $key => $value) {
-            
+
             $data[$key] = array_merge($value, $mergeables);
         }
 

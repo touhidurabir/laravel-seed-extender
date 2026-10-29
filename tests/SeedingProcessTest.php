@@ -8,8 +8,8 @@ use Touhidurabir\SeedExtender\Tests\App\UsersTableSeeder;
 use Touhidurabir\SeedExtender\Tests\App\UsersTableSeederViaModel;
 use Touhidurabir\SeedExtender\Tests\Traits\LaravelTestBootstrapping;
 
-class SeedingProcessTest extends TestCase {
-
+class SeedingProcessTest extends TestCase
+{
     use LaravelTestBootstrapping;
 
     /**
@@ -17,10 +17,11 @@ class SeedingProcessTest extends TestCase {
      *
      * @return void
      */
-    protected function defineDatabaseMigrations() {
+    protected function defineDatabaseMigrations()
+    {
 
         $this->loadMigrationsFrom(__DIR__ . '/App/database/migrations');
-        
+
         $this->artisan('migrate', ['--database' => 'testbench'])->run();
 
         $this->beforeApplicationDestroyed(function () {
@@ -36,7 +37,8 @@ class SeedingProcessTest extends TestCase {
      * @param  Illuminate\Foundation\Application $app
      * @return void
      */
-    protected function defineEnvironment($app) {
+    protected function defineEnvironment($app)
+    {
 
         // Setup default database to use sqlite :memory:
         $app['config']->set('database.default', 'testbench');
@@ -53,10 +55,12 @@ class SeedingProcessTest extends TestCase {
     }
 
 
+    /** @test */
     #[Test]
-    public function the_seeder_class_will_seed_data() {
+    public function the_seeder_class_will_seed_data()
+    {
 
-        (new UsersTableSeeder)->run();
+        (new UsersTableSeeder())->run();
 
         $this->assertDatabaseHas('users', [
             'email' => 'testuser1@test.com',
@@ -68,10 +72,12 @@ class SeedingProcessTest extends TestCase {
     }
 
 
+    /** @test */
     #[Test]
-    public function the_seeder_class_will_seed_data_via_model() {
+    public function the_seeder_class_will_seed_data_via_model()
+    {
 
-        (new UsersTableSeederViaModel)->run();
+        (new UsersTableSeederViaModel())->run();
 
         $this->assertDatabaseHas('users', [
             'email' => 'testuser1@test.com',
@@ -81,5 +87,5 @@ class SeedingProcessTest extends TestCase {
             'email' => 'testuser2@test.com',
         ]);
     }
-    
+
 }

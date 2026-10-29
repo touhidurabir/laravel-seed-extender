@@ -1,0 +1,7 @@
+{
+    "preset": "psr12",
+    "notPath": [
+        "tests/App/UsersTableSeederEmpty.php",
+        "tests/App/UsersTableSeederWithoutTableName.php"
+    ]
+}
